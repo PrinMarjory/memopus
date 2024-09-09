@@ -1,1 +1,6 @@
-<p>home works!</p>
+<div class="container">
+    <h1>Liste des cartes mémoires</h1>
+    <div *ngFor="let card of memoryCards">
+      <app-card [card]="card"></app-card>
+    </div>
+</div>
