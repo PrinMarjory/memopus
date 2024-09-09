@@ -34,4 +34,14 @@ export class MemoryCardService {
     addMemoryCard(card: MemoryCard): Observable<MemoryCard> {
       return this.http.post<MemoryCard>(this.apiUrl, card);
     }
+
+      /**
+   * Met à jour une carte mémoire existante.
+   * 
+   * @param card - La carte mémoire à mettre à jour.
+   */
+  updateMemoryCard(card: MemoryCard): Observable<MemoryCard> {
+    const url = `${this.apiUrl}/${card.id}`;
+    return this.http.put<MemoryCard>(url, card);
+  }
 }

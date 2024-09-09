@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MemoryCard } from '../interfaces/memory-card.interface';
 
 /**
@@ -16,10 +16,18 @@ import { MemoryCard } from '../interfaces/memory-card.interface';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent {
-    /**
+  /**
    * La carte mémoire à afficher.
    * 
    * @type {MemoryCard}
    */
   @Input() card!: MemoryCard;
+  @Output() edit = new EventEmitter<MemoryCard>();
+
+  /**
+   * Émet un événement lorsque le bouton "Modifier" est cliqué.
+   */
+    onEdit(): void {
+      this.edit.emit(this.card);
+    }
 }

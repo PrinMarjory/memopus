@@ -1,11 +1,11 @@
 <div class="container">
   <h2>Liste des cartes mémoire</h2>
-  <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addCardModal">
+  <button type="button" class="btn btn-primary mb-4" (click)="openAddModal()">
     Ajouter une carte mémoire
   </button>
   <div class="row">
     <div class="mb-2" *ngFor="let card of memoryCards">
-      <app-card [card]="card"></app-card>
+      <app-card [card]="card" (edit)="openEditModal($event)"></app-card>
     </div>
   </div>
 </div>
@@ -16,11 +16,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addCardModalLabel">Ajouter une nouvelle carte mémoire</h5>
+        <h5 class="modal-title" id="addCardModalLabel">{{ isEditMode ? 'Modifier' : 'Ajouter' }} une carte mémoire</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="newCardForm" (ngSubmit)="addCard()">
+        <form [formGroup]="newCardForm" (ngSubmit)="isEditMode ? updateCard() : addCard()">
           <div class="mb-3">
             <label for="question" class="form-label">Question:</label>
             <input id="question" formControlName="question" class="form-control">
@@ -39,7 +39,7 @@
             <label for="description" class="form-label">Description:</label>
             <input id="description" formControlName="description" class="form-control">
           </div>
-          <button type="submit" class="btn btn-primary" [disabled]="newCardForm.invalid">Ajouter</button>
+          <button type="submit" class="btn btn-primary" [disabled]="newCardForm.invalid">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
         </form>
       </div>
     </div>
