@@ -15,5 +15,36 @@
       "username": "a",
       "password": "a"
     }
+  ],
+  "memoryCards": [
+    {
+      "id": 1,
+      "question": "Qu'est-ce qu'Angular ?",
+      "answer": "Un framework pour applications web.",
+      "description": "Angular est une plateforme pour créer des applications web mobiles et de bureau."
+    },
+    {
+      "id": 2,
+      "question": "Qu'est-ce que TypeScript ?",
+      "answer": "Un sur-ensemble de JavaScript.",
+      "description": "TypeScript est un langage de programmation fortement typé qui se base sur JavaScript."
+    },
+    {
+      "id": 3,
+      "question": "Qu'est-ce qu'une API ?",
+      "answer": "Une interface de programmation d'application.",
+      "description": "Une API est un ensemble de règles qui permet à différents logiciels de communiquer entre eux."
+    },
+    {
+      "id": 4,
+      "question": "Qu'est-ce que le DOM ?",
+      "answer": "Le Document Object Model.",
+      "description": "Le DOM est une interface de programmation pour les documents HTML et XML."
+    },
+    {
+      "id": 5,
+      "question": "Quelle est la différence entre une variable locale et une variable globale ?",
+      "answer": "Les variables locales sont définies dans une fonction et ne sont accessibles que dans cette fonction, tandis que les variables globales sont définies en dehors de toute fonction et sont accessibles partout dans le code."
+    }
   ]
 }
