@@ -24,4 +24,14 @@ export class MemoryCardService {
   getMemoryCards(): Observable<MemoryCard[]> {
     return this.http.get<MemoryCard[]>(this.apiUrl);
   }
+
+  /**
+   * Ajoute une nouvelle carte mémoire.
+   * 
+   * @param card - La carte mémoire à ajouter.
+   * @returns Un Observable contenant la carte mémoire ajoutée.
+   */
+    addMemoryCard(card: MemoryCard): Observable<MemoryCard> {
+      return this.http.post<MemoryCard>(this.apiUrl, card);
+    }
 }
