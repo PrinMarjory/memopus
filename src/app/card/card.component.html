@@ -3,6 +3,7 @@
       <h5 class="card-title">{{ card.question }}</h5>
       <p class="card-text"><strong>Réponse:</strong> {{ card.answer }}</p>
       <p class="card-text"><small class="text-muted">{{ card.description }}</small></p>
-      <button type="button" class="btn btn-secondary mt-2" (click)="onEdit()">Modifier</button>
+      <button type="button" class="btn btn-primary mt-2" (click)="onEdit()">Modifier</button>
+      <button type="button" class="btn btn-danger mt-2 ms-2" (click)="onDelete()">x</button>
     </div>
 </div>

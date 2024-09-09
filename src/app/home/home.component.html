@@ -5,10 +5,10 @@
   </button>
   <div class="row">
     <div class="mb-2" *ngFor="let card of memoryCards">
-      <app-card [card]="card" (edit)="openEditModal($event)"></app-card>
+      <app-card [card]="card" (edit)="openEditModal($event)" (delete)="openDeleteModal($event)"></app-card>
     </div>
   </div>
-</div>
+</div>""
 
 
 <!-- Modale du formulaire d'ajout -->
@@ -41,6 +41,25 @@
           </div>
           <button type="submit" class="btn btn-primary" [disabled]="newCardForm.invalid">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modale de confirmation de suppression -->
+<div class="modal fade" id="deleteCardModal" tabindex="-1" aria-labelledby="deleteCardModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteCardModalLabel">Confirmer la suppression</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sûr de vouloir supprimer cette carte mémoire ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-danger" (click)="deleteCard()">Supprimer</button>
       </div>
     </div>
   </div>

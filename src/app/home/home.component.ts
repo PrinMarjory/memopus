@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   newCardForm!: FormGroup;
   isEditMode = false;
   editCardId: number | null = null;
+  deleteCardId: number | null = null;
 
   /**
    * Constructeur du composant HomeComponent.
@@ -90,26 +91,53 @@ export class HomeComponent implements OnInit {
   /**
    * Ouvre la modale en mode ajout.
    */
-    openAddModal(): void {
-      this.isEditMode = false;
-      this.newCardForm.reset();
-      this.editCardId = null;
-      const modal = new (window as any).bootstrap.Modal(document.getElementById('addCardModal')!);
-      modal.show();
-    }
+  openAddModal(): void {
+    this.isEditMode = false;
+    this.newCardForm.reset();
+    this.editCardId = null;
+    const modal = new (window as any).bootstrap.Modal(document.getElementById('addCardModal')!);
+    modal.show();
+  }
 
   /**
    * Ouvre la modale en mode modification et préremplit le formulaire.
    * 
    * @param card - La carte mémoire à modifier.
    */
-    openEditModal(card: MemoryCard): void {
-      this.isEditMode = true;
-      this.editCardId = card.id;
-      this.newCardForm.patchValue(card);
-      const modal = new (window as any).bootstrap.Modal(document.getElementById('addCardModal')!);
+  openEditModal(card: MemoryCard): void {
+    this.isEditMode = true;
+    this.editCardId = card.id;
+    this.newCardForm.patchValue(card);
+    const modal = new (window as any).bootstrap.Modal(document.getElementById('addCardModal')!);
+    modal.show();
+  }
+
+  /**
+   * Ferme la modale d'ajout ou de modification
+   * 
+   * @param modalId - L'identifiant de la modale à fermer.
+   */
+  hideAddModal(modalId: string): void {
+    const modalElement = document.getElementById(modalId) as any;
+    if (modalElement) {
+      const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
+      modal.hide();
+    }
+  }
+
+  /**
+   * Ouvre la modale de confirmation de suppression.
+   * 
+   * @param card - La carte mémoire à supprimer.
+   */
+  openDeleteModal(card: MemoryCard): void {
+    this.deleteCardId = card.id;
+    const modalElement = document.getElementById('deleteCardModal') as any;
+    if (modalElement) {
+      const modal = new (window as any).bootstrap.Modal(modalElement);
       modal.show();
     }
+  }
 
   /**
    * Ajoute une nouvelle carte mémoire.
@@ -131,12 +159,8 @@ export class HomeComponent implements OnInit {
             this.memoryCards[index] = card;
           }
           this.newCardForm.reset();
-        // Fermer la modale
-        const modalElement = document.getElementById('addCardModal') as any;
-        if (modalElement) {
-          const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
-          modal.hide();
-        }
+          this.hideAddModal("addCardModal");
+
         },
         error: (error) => {
           console.error('Erreur lors de l\'ajout de la carte mémoire:', error);
@@ -168,15 +192,30 @@ export class HomeComponent implements OnInit {
         this.newCardForm.reset();
         this.isEditMode = false;
         this.editCardId = null;
-        // Fermer la modale
-        const modalElement = document.getElementById('addCardModal') as any;
-        if (modalElement) {
-          const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
-          modal.hide();
-        }
+        this.hideAddModal("addCardModal");
       },
       error: (error) => {
         console.error('Erreur lors de la modification de la carte mémoire:', error);
+      }
+    });
+  }
+
+  /**
+   * Supprime une carte mémoire
+   */
+  deleteCard(): void {
+    if (this.deleteCardId === null) {
+      return;
+    }
+
+    this.memoryCardService.deleteMemoryCard(this.deleteCardId).subscribe({
+      next: () => {
+        this.memoryCards = this.memoryCards.filter(card => card.id !== this.deleteCardId);
+        this.deleteCardId = null;
+        this.hideAddModal("deleteCardModal");
+      },
+      error: (error) => {
+        console.error('Erreur lors de la suppression de la carte mémoire:', error);
       }
     });
   }

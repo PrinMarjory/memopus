@@ -45,18 +45,6 @@
       "id": 5,
       "question": "Quelle est la différence entre une variable locale et une variable globale ?",
       "answer": "Les variables locales sont définies dans une fonction et ne sont accessibles que dans cette fonction, tandis que les variables globales sont définies en dehors de toute fonction et sont accessibles partout dans le code."
-    },
-    {
-      "question": "test",
-      "answer": "test",
-      "description": null,
-      "id": 6
-    },
-    {
-      "question": "test",
-      "answer": "test 3",
-      "description": "des modifs",
-      "id": 7
     }
   ]
 }

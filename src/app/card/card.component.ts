@@ -23,11 +23,19 @@ export class CardComponent {
    */
   @Input() card!: MemoryCard;
   @Output() edit = new EventEmitter<MemoryCard>();
+  @Output() delete = new EventEmitter<MemoryCard>();
 
   /**
    * Émet un événement lorsque le bouton "Modifier" est cliqué.
    */
     onEdit(): void {
       this.edit.emit(this.card);
+    }
+
+  /**
+   * Émet un événement lorsque le bouton "Supprimer" est cliqué.
+   */
+    onDelete(): void {
+      this.delete.emit(this.card);
     }
 }

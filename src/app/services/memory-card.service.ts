@@ -44,4 +44,13 @@ export class MemoryCardService {
     const url = `${this.apiUrl}/${card.id}`;
     return this.http.put<MemoryCard>(url, card);
   }
+
+  /**
+   * Supprime une carte mémoire.
+   * 
+   * @param id - L'identifiant de la carte mémoire à supprimer. 
+   */
+  deleteMemoryCard(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
