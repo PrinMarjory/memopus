@@ -24,6 +24,22 @@ export class AppComponent {
   constructor(public authService: AuthService, private router: Router) {}
 
   /**
+   * Initialisation du composant.   
+   * Écoute les changements dans l'état de connexion.
+   * 
+   */
+  ngOnInit(): void {
+    this.authService.isLoggedIn().subscribe({
+      next: (isLoggedIn) => {
+        this.isLoggedIn = isLoggedIn;
+      },
+      error: (error) => {
+        console.error('Erreur lors de la vérification de l\'état de connexion:', error);
+      }
+    });
+  }
+
+  /**
    * Méthode pour déconnecter l'utilisateur.
    */
   logout(): void {
