@@ -10,10 +10,10 @@
     <div class="mb-4">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Tous les tags</a>
+          <a class="nav-link" [ngClass]="{'active': selectedTag === 'Tous les tags'}" (click)="filterByTag('Tous les tags')">Tous les tags</a>
         </li>
         <li class="nav-item" *ngFor="let tag of tags">
-          <a class="nav-link" href="#">{{ tag }}</a>
+          <a class="nav-link" [ngClass]="{'active': selectedTag === tag}" (click)="filterByTag(tag)">{{ tag }}</a>
         </li>
       </ul>
     </div>

@@ -27,6 +27,7 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
 export class HomeComponent implements OnInit {
   memoryCards: MemoryCardInterface[] = []; //Liste des cartes mémoire
   tags: string[] = []; //Liste des tags existants
+  selectedTag: string = 'Tous les tags'; //Tag sélectionné, par défaut "Tous les tags"
   columns: ColumnInterface[] = [
     { id: 1, label: 'A apprendre', order: 1 },
     { id: 2, label: 'Je sais un peu', order: 2 },
@@ -123,13 +124,26 @@ export class HomeComponent implements OnInit {
   }
 
   /**
-   * Récupère les cartes mémoire par colonne.
+   * Récupère les cartes mémoire par colonne et par tag sélectionné.
    * 
-   * @param columnLabel - Le label de la colonne.
-   * @returns La liste des cartes mémoire de la colonne spécifiée.
+   * @param columnLabel - Le label de la colonne à filtrer.
+   * @returns Les cartes mémoire de la colonne spécifiée.
    */
   getCardsByColumn(columnLabel: 'A apprendre' | 'Je sais un peu' | 'Je sais bien' | 'Je sais parfaitement'): MemoryCardInterface[] {
-    return this.memoryCards.filter(card => card.column.label === columnLabel);
+    if (this.selectedTag === 'Tous les tags') {
+      return this.memoryCards.filter(card => card.column.label === columnLabel);
+    } else {
+      return this.memoryCards.filter(card => card.column.label === columnLabel && card.tag === this.selectedTag);
+    }
+  }
+
+  /**
+   * Filtre les cartes mémoire par tag.
+   * 
+   * @param tag - Le tag à filtrer.
+   */
+  filterByTag(tag: string): void {
+    this.selectedTag = tag;
   }
 
 
@@ -203,6 +217,7 @@ export class HomeComponent implements OnInit {
       let tag = this.newCardForm.value.newTag || this.newCardForm.value.tag;
       let column = this.columns.find(col => col.label === this.newCardForm.value.column);
 
+      // Créer un objet pour la nouvelle carte
       const newCard: NewCardInterface = {
         question: this.newCardForm.value.question,
         answer: this.newCardForm.value.answer,
@@ -261,7 +276,7 @@ export class HomeComponent implements OnInit {
     let columnLabel = this.newCardForm.value.column;
     let column = this.columns.find(col => col.label === columnLabel); 
 
-
+    // Créer un objet partiel pour la mise à jour
     const updatedCard: PatchCardInterface = {
       question: this.newCardForm.value.question,
       answer: this.newCardForm.value.answer,
@@ -272,6 +287,7 @@ export class HomeComponent implements OnInit {
 
     this.memoryCardService.updateMemoryCard(this.editCardId, updatedCard).subscribe({
       next: (card) => {
+        // Mettre à jour la carte dans la liste
         const index = this.memoryCards.findIndex(c => c.id === this.editCardId);
         if (index !== -1) {
           this.memoryCards[index] = card;
@@ -306,9 +322,16 @@ export class HomeComponent implements OnInit {
 
     this.memoryCardService.deleteMemoryCard(this.deleteCardId).subscribe({
       next: () => {
+        // Supprimer la carte de la liste
         this.memoryCards = this.memoryCards.filter(card => card.id !== this.deleteCardId);
+        // Mettre à jour la liste des tags
         const existingTags = new Set(this.memoryCards.map(card => card.tag));
         this.tags = [...existingTags];
+        // Réinitialiser le tag sélectionné si la carte supprimée était la seule de ce tag
+        if (this.selectedTag !== 'Tous les tags' && !this.memoryCards.some(card => card.tag === this.selectedTag)) {
+          this.selectedTag = 'Tous les tags';
+        }
+        // Réinitialiser l'ID de la carte à supprimer et fermer la modale
         this.deleteCardId = null;
         this.hideAddModal("deleteCardModal");
       },

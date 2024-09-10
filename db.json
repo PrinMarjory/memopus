@@ -18,7 +18,6 @@
   ],
   "memoryCards": [
     {
-      "id": 1,
       "question": "Quel est l'instrument de musique le plus joué dans le monde ?",
       "answer": "Le piano.",
       "description": "Le piano est un instrument de musique à cordes frappées, apprécié pour sa polyvalence et son large éventail de styles musicaux.",
@@ -27,7 +26,8 @@
         "id": 1,
         "label": "A apprendre",
         "order": 1
-      }
+      },
+      "id": 1
     },
     {
       "id": 2,
