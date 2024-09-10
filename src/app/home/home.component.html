@@ -4,11 +4,17 @@
     Ajouter une carte mémoire
   </button>
   <div class="row">
-    <div class="mb-2" *ngFor="let card of memoryCards">
-      <app-card [card]="card" (edit)="openEditModal($event)" (delete)="openDeleteModal($event)"></app-card>
+    <div class="col" *ngFor="let column of columns">
+      <h5 class="text-muted">{{ column.label }}</h5>
+      <div class="mb-2" *ngIf="getCardsByColumn(column.label).length === 0">
+        <p>Aucune carte à afficher dans cette colonne.</p>
+      </div>
+      <div class="mb-2" *ngFor="let card of getCardsByColumn(column.label)">
+        <app-card [card]="card" (edit)="openEditModal($event)" (delete)="openDeleteModal($event)"></app-card>
+      </div>
     </div>
   </div>
-</div>""
+</div>
 
 
 <!-- Modale du formulaire d'ajout -->
@@ -67,10 +73,7 @@
           <div *ngIf="isEditMode" class="mb-3">
             <label for="column" class="form-label">Colonne:</label>
             <select id="column" formControlName="column" class="form-select">
-              <option value="A apprendre">A apprendre</option>
-              <option value="Je sais un peu">Je sais un peu</option>
-              <option value="Je sais bien">Je sais bien</option>
-              <option value="Je sais parfaitement">Je sais parfaitement</option>
+              <option *ngFor="let col of columns" [value]="col.label">{{ col.label }}</option>
             </select>
           </div>
         

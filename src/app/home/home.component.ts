@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MemoryCardInterface, NewCardInterface, PatchCardInterface } from '../interfaces/memory-card.interface';
+import { ColumnInterface } from '../interfaces/column.interface';
 import { MemoryCardService } from '../services/memory-card.service';
 import { CardComponent } from '../card/card.component';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,6 +27,12 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
 export class HomeComponent implements OnInit {
   memoryCards: MemoryCardInterface[] = []; //Liste des cartes mémoire
   tags: string[] = []; //Liste des tags existants
+  columns: ColumnInterface[] = [
+    { id: 1, label: 'A apprendre', order: 1 },
+    { id: 2, label: 'Je sais un peu', order: 2 },
+    { id: 3, label: 'Je sais bien', order: 3 },
+    { id: 4, label: 'Je sais parfaitement', order: 4 }
+  ];
   newCardForm!: FormGroup;
   isEditMode = false;
   editCardId: number | null = null;
@@ -106,6 +113,7 @@ export class HomeComponent implements OnInit {
     this.memoryCardService.getMemoryCards().subscribe({
       next: (cards) => {
         this.memoryCards = cards;
+        console.log('Cartes chargées:', this.memoryCards);
         this.tags = [...new Set(cards.map(card => card.tag))]; // Récupérer les tags uniques
       },
       error: (error) => {
@@ -113,6 +121,17 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+  /**
+   * Récupère les cartes mémoire par colonne.
+   * 
+   * @param columnLabel - Le label de la colonne.
+   * @returns La liste des cartes mémoire de la colonne spécifiée.
+   */
+  getCardsByColumn(columnLabel: 'A apprendre' | 'Je sais un peu' | 'Je sais bien' | 'Je sais parfaitement'): MemoryCardInterface[] {
+    return this.memoryCards.filter(card => card.column.label === columnLabel);
+  }
+
 
   /**
    * Ouvre la modale en mode ajout.
@@ -141,7 +160,7 @@ export class HomeComponent implements OnInit {
       description: card.description,
       tag: card.tag,
       newTag: '', 
-      column: card.column 
+      column: card.column.label
     });
     
     const modal = new (window as any).bootstrap.Modal(document.getElementById('addCardModal')!);
@@ -182,13 +201,14 @@ export class HomeComponent implements OnInit {
     if (this.newCardForm.valid) {
       // Si un nouveau tag est saisi, utilisez-le, sinon utilisez le tag sélectionné
       let tag = this.newCardForm.value.newTag || this.newCardForm.value.tag;
+      let column = this.columns.find(col => col.label === this.newCardForm.value.column);
 
       const newCard: NewCardInterface = {
         question: this.newCardForm.value.question,
         answer: this.newCardForm.value.answer,
         description: this.newCardForm.value.description,
         tag: tag,
-        column: 'A apprendre' // Toujours par défaut "A apprendre" pour les nouvelles cartes
+        column: column || this.columns[0]  // Toujours par défaut "A apprendre" pour les nouvelles cartes
       };
 
       // Ajout temporaire de la carte avec un ID temporaire pour l'interface utilisateur
@@ -237,14 +257,17 @@ export class HomeComponent implements OnInit {
     }
 
     // Si un nouveau tag est saisi, utilisez-le, sinon utilisez le tag sélectionné
-    let tag = this.newCardForm.value.newTag || this.newCardForm.value.tag; 
+    let tag = this.newCardForm.value.newTag || this.newCardForm.value.tag;
+    let columnLabel = this.newCardForm.value.column;
+    let column = this.columns.find(col => col.label === columnLabel); 
+
 
     const updatedCard: PatchCardInterface = {
       question: this.newCardForm.value.question,
       answer: this.newCardForm.value.answer,
       description: this.newCardForm.value.description,
       tag: tag,
-      column: this.newCardForm.value.column 
+      column: column 
     };
 
     this.memoryCardService.updateMemoryCard(this.editCardId, updatedCard).subscribe({
