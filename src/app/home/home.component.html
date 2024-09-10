@@ -21,6 +21,7 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="newCardForm" (ngSubmit)="isEditMode ? updateCard() : addCard()">
+          <!-- Champ question -->
           <div class="mb-3">
             <label for="question" class="form-label">Question:</label>
             <input id="question" formControlName="question" class="form-control">
@@ -28,6 +29,8 @@
               La question est requise.
             </div>
           </div>
+        
+          <!-- Champ réponse -->
           <div class="mb-3">
             <label for="answer" class="form-label">Réponse:</label>
             <input id="answer" formControlName="answer" class="form-control">
@@ -35,12 +38,44 @@
               La réponse est requise.
             </div>
           </div>
+        
+          <!-- Champ description -->
           <div class="mb-3">
             <label for="description" class="form-label">Description:</label>
             <input id="description" formControlName="description" class="form-control">
           </div>
+        
+          <!-- Champ de sélection du tag -->
+          <div class="form-group">
+            <label for="tag">Tag:</label>
+            <select formControlName="tag" id="tag" class="form-select" [disabled]="!!newCardForm.value.newTag">
+              <option value="" disabled>Sélectionnez un tag</option>
+              <option *ngFor="let tag of tags" [value]="tag">{{ tag }}</option>
+            </select>
+            <div *ngIf="newCardForm.get('tag')?.hasError('required') && newCardForm.get('tag')?.touched" class="invalid-feedback d-block">
+              Le tag est requis si aucun nouveau tag n'est saisi.
+            </div>
+          </div>
+        
+          <!-- Champ pour un nouveau tag -->
+          <div class="form-group">
+            <label for="newTag">Créer un nouveau tag:</label>
+            <input type="text" id="newTag" formControlName="newTag" class="form-control">
+          </div>
+        
+          <!-- Modification de la colonne uniquement en mode édition -->
+          <div *ngIf="isEditMode" class="mb-3">
+            <label for="column" class="form-label">Colonne:</label>
+            <select id="column" formControlName="column" class="form-select">
+              <option value="A apprendre">A apprendre</option>
+              <option value="Je sais un peu">Je sais un peu</option>
+              <option value="Je sais bien">Je sais bien</option>
+              <option value="Je sais parfaitement">Je sais parfaitement</option>
+            </select>
+          </div>
+        
           <button type="submit" class="btn btn-primary" [disabled]="newCardForm.invalid">{{ isEditMode ? 'Modifier' : 'Ajouter' }}</button>
-        </form>
+        </form>        
       </div>
     </div>
   </div>

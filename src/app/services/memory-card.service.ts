@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MemoryCard } from '../interfaces/memory-card.interface';
+import { MemoryCardInterface, NewCardInterface, PatchCardInterface } from '../interfaces/memory-card.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,8 @@ export class MemoryCardService {
    * 
    * @returns Un Observable contenant un tableau de MemoryCard.
    */
-  getMemoryCards(): Observable<MemoryCard[]> {
-    return this.http.get<MemoryCard[]>(this.apiUrl);
+  getMemoryCards(): Observable<MemoryCardInterface[]> {
+    return this.http.get<MemoryCardInterface[]>(this.apiUrl);
   }
 
   /**
@@ -31,18 +31,18 @@ export class MemoryCardService {
    * @param card - La carte mémoire à ajouter.
    * @returns Un Observable contenant la carte mémoire ajoutée.
    */
-    addMemoryCard(card: MemoryCard): Observable<MemoryCard> {
-      return this.http.post<MemoryCard>(this.apiUrl, card);
-    }
+  addMemoryCard(card: NewCardInterface): Observable<MemoryCardInterface> {
+    return this.http.post<MemoryCardInterface>(this.apiUrl, card);
+  }
 
       /**
    * Met à jour une carte mémoire existante.
    * 
    * @param card - La carte mémoire à mettre à jour.
    */
-  updateMemoryCard(card: MemoryCard): Observable<MemoryCard> {
-    const url = `${this.apiUrl}/${card.id}`;
-    return this.http.put<MemoryCard>(url, card);
+  updateMemoryCard(id: number, card: PatchCardInterface): Observable<MemoryCardInterface> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<MemoryCardInterface>(url, card);
   }
 
   /**

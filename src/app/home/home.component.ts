@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { MemoryCardInterface } from '../interfaces/memory-card.interface';
+import { MemoryCardInterface, NewCardInterface, PatchCardInterface } from '../interfaces/memory-card.interface';
 import { MemoryCardService } from '../services/memory-card.service';
 import { CardComponent } from '../card/card.component';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,8 +24,8 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  memoryCards: MemoryCardInterface[] = [];
-  newCard: MemoryCardInterface = { id: 0, question: '', answer: '', description: '', tag: '', column: 'A apprendre' };
+  memoryCards: MemoryCardInterface[] = []; //Liste des cartes mémoire
+  tags: string[] = []; //Liste des tags existants
   newCardForm!: FormGroup;
   isEditMode = false;
   editCardId: number | null = null;
@@ -66,12 +66,37 @@ export class HomeComponent implements OnInit {
     // Récupérer les cartes mémoire
     this.loadMemoryCards();
 
-    // Créer le formulaire pour ajouter une nouvelle carte
+    // Création du formulaire pour les nouvelles cartes
     this.newCardForm = this.fb.group({
       question: ['', Validators.required],
       answer: ['', Validators.required],
-      description: ['']
+      description: [''],
+      tag: ['', this.tagValidator.bind(this)], // Validator conditionnel 
+      newTag: [''],
+      column: ['']
     });
+
+    // Réactivez les validateurs lorsque newTag change
+    this.newCardForm.get('newTag')?.valueChanges.subscribe(() => {
+    this.newCardForm.get('tag')?.updateValueAndValidity();
+  });
+  }
+
+    /**
+   * Validator personnalisé pour le champ 'tag'.
+   * Si le champ 'newTag' est vide, 'tag' devient requis.
+   */
+  tagValidator(control: any): { [key: string]: any } | null {
+    if (!this.newCardForm) {
+      return null;
+    }
+    const newTag = this.newCardForm.get('newTag')?.value;
+    const tag = control.value;
+    
+    if (!newTag && !tag) {
+      return { required: true }; // Tag est requis si aucun nouveau tag n'est saisi
+    }
+    return null;
   }
 
   /**
@@ -81,6 +106,7 @@ export class HomeComponent implements OnInit {
     this.memoryCardService.getMemoryCards().subscribe({
       next: (cards) => {
         this.memoryCards = cards;
+        this.tags = [...new Set(cards.map(card => card.tag))]; // Récupérer les tags uniques
       },
       error: (error) => {
         console.error('Erreur lors de la récupération des cartes mémoire:', error);
@@ -107,7 +133,17 @@ export class HomeComponent implements OnInit {
   openEditModal(card: MemoryCardInterface): void {
     this.isEditMode = true;
     this.editCardId = card.id;
-    this.newCardForm.patchValue(card);
+
+    // Préremplir tous les champs, y compris le tag et la colonne
+    this.newCardForm.patchValue({
+      question: card.question,
+      answer: card.answer,
+      description: card.description,
+      tag: card.tag,
+      newTag: '', 
+      column: card.column 
+    });
+    
     const modal = new (window as any).bootstrap.Modal(document.getElementById('addCardModal')!);
     modal.show();
   }
@@ -144,20 +180,39 @@ export class HomeComponent implements OnInit {
    */
   addCard(): void {
     if (this.newCardForm.valid) {
-      const newCard: MemoryCardInterface = this.newCardForm.value;
+      // Si un nouveau tag est saisi, utilisez-le, sinon utilisez le tag sélectionné
+      let tag = this.newCardForm.value.newTag || this.newCardForm.value.tag;
 
-      // Mise à jour de l'interface
+      const newCard: NewCardInterface = {
+        question: this.newCardForm.value.question,
+        answer: this.newCardForm.value.answer,
+        description: this.newCardForm.value.description,
+        tag: tag,
+        column: 'A apprendre' // Toujours par défaut "A apprendre" pour les nouvelles cartes
+      };
+
+      // Ajout temporaire de la carte avec un ID temporaire pour l'interface utilisateur
       const tempId = Date.now();
       const tempCard = { ...newCard, id: tempId };
       this.memoryCards.push(tempCard);
 
+      // Appel au service pour ajouter la nouvelle carte sans ID
       this.memoryCardService.addMemoryCard(newCard).subscribe({
-        next: (card) => {
+        next: (addedCard: MemoryCardInterface) => {
           // Remplacer la carte temporaire par la carte réelle
           const index = this.memoryCards.findIndex(c => c.id === tempId);
           if (index !== -1) {
-            this.memoryCards[index] = card;
+            this.memoryCards[index] = addedCard;
           }
+
+          // Mettre à jour la liste des tags si un nouveau tag est saisi
+          if (this.newCardForm.value.newTag) {
+            if (!this.tags.includes(this.newCardForm.value.newTag)) {
+              this.tags.push(this.newCardForm.value.newTag);
+            }
+          }
+          
+          // Réinitialiser le formulaire et fermer la modale
           this.newCardForm.reset();
           this.hideAddModal("addCardModal");
 
@@ -181,14 +236,32 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    const updatedCard: MemoryCardInterface = { ...this.newCardForm.value, id: this.editCardId };
+    // Si un nouveau tag est saisi, utilisez-le, sinon utilisez le tag sélectionné
+    let tag = this.newCardForm.value.newTag || this.newCardForm.value.tag; 
 
-    this.memoryCardService.updateMemoryCard(updatedCard).subscribe({
+    const updatedCard: PatchCardInterface = {
+      question: this.newCardForm.value.question,
+      answer: this.newCardForm.value.answer,
+      description: this.newCardForm.value.description,
+      tag: tag,
+      column: this.newCardForm.value.column 
+    };
+
+    this.memoryCardService.updateMemoryCard(this.editCardId, updatedCard).subscribe({
       next: (card) => {
         const index = this.memoryCards.findIndex(c => c.id === this.editCardId);
         if (index !== -1) {
           this.memoryCards[index] = card;
         }
+
+        // Mettre à jour la liste des tags si un nouveau tag est saisi
+        if (this.newCardForm.value.newTag) {
+          if (!this.tags.includes(this.newCardForm.value.newTag)) {
+            this.tags.push(this.newCardForm.value.newTag);
+          }
+        }
+
+        // Réinitialiser le formulaire et fermer la modale
         this.newCardForm.reset();
         this.isEditMode = false;
         this.editCardId = null;
@@ -211,6 +284,8 @@ export class HomeComponent implements OnInit {
     this.memoryCardService.deleteMemoryCard(this.deleteCardId).subscribe({
       next: () => {
         this.memoryCards = this.memoryCards.filter(card => card.id !== this.deleteCardId);
+        const existingTags = new Set(this.memoryCards.map(card => card.tag));
+        this.tags = [...existingTags];
         this.deleteCardId = null;
         this.hideAddModal("deleteCardModal");
       },
