@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { MemoryCard } from '../interfaces/memory-card.interface';
+import { MemoryCardInterface } from '../interfaces/memory-card.interface';
 
 /**
  * Composant pour afficher une carte mémoire.
@@ -21,9 +21,9 @@ export class CardComponent {
    * 
    * @type {MemoryCard}
    */
-  @Input() card!: MemoryCard;
-  @Output() edit = new EventEmitter<MemoryCard>();
-  @Output() delete = new EventEmitter<MemoryCard>();
+  @Input() card!: MemoryCardInterface;
+  @Output() edit = new EventEmitter<MemoryCardInterface>();
+  @Output() delete = new EventEmitter<MemoryCardInterface>();
 
   /**
    * Émet un événement lorsque le bouton "Modifier" est cliqué.

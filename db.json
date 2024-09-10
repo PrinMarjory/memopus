@@ -19,32 +19,243 @@
   "memoryCards": [
     {
       "id": 1,
-      "question": "Qu'est-ce qu'Angular ?",
-      "answer": "Un framework pour applications web.",
-      "description": "Angular est une plateforme pour créer des applications web mobiles et de bureau."
+      "question": "Quel est l'instrument de musique le plus joué dans le monde ?",
+      "answer": "Le piano.",
+      "description": "Le piano est un instrument de musique à cordes frappées, apprécié pour sa polyvalence et son large éventail de styles musicaux.",
+      "tag": "musique",
+      "column": "A apprendre"
     },
     {
       "id": 2,
-      "question": "Qu'est-ce que TypeScript ?",
-      "answer": "Un sur-ensemble de JavaScript.",
-      "description": "TypeScript est un langage de programmation fortement typé qui se base sur JavaScript."
+      "question": "Quel est le plus grand désert du monde ?",
+      "answer": "Le désert du Sahara.",
+      "description": "Le Sahara est le plus grand désert chaud du monde, couvrant une grande partie de l'Afrique du Nord.",
+      "tag": "voyage",
+      "column": "Je sais un peu"
     },
     {
       "id": 3,
-      "question": "Qu'est-ce qu'une API ?",
-      "answer": "Une interface de programmation d'application.",
-      "description": "Une API est un ensemble de règles qui permet à différents logiciels de communiquer entre eux."
+      "question": "Quel est l'animal terrestre le plus rapide au monde ?",
+      "answer": "Le guépard.",
+      "description": "Le guépard est capable d'atteindre une vitesse de pointe de 100 à 120 km/h en seulement quelques secondes.",
+      "tag": "animaux",
+      "column": "Je sais bien"
     },
     {
       "id": 4,
-      "question": "Qu'est-ce que le DOM ?",
-      "answer": "Le Document Object Model.",
-      "description": "Le DOM est une interface de programmation pour les documents HTML et XML."
+      "question": "Quel type de fromage est traditionnellement utilisé pour la fondue ?",
+      "answer": "Le gruyère.",
+      "description": "Le gruyère est un fromage suisse utilisé dans de nombreux plats, notamment la fondue, qui est un plat typique de Suisse.",
+      "tag": "nourriture",
+      "column": "Je sais parfaitement"
     },
     {
       "id": 5,
-      "question": "Quelle est la différence entre une variable locale et une variable globale ?",
-      "answer": "Les variables locales sont définies dans une fonction et ne sont accessibles que dans cette fonction, tandis que les variables globales sont définies en dehors de toute fonction et sont accessibles partout dans le code."
+      "question": "Qui est surnommé le roi de la pop ?",
+      "answer": "Michael Jackson.",
+      "description": "Michael Jackson est surnommé le roi de la pop en raison de son influence révolutionnaire dans la musique pop et de ses nombreuses innovations.",
+      "tag": "musique",
+      "column": "A apprendre"
+    },
+    {
+      "id": 6,
+      "question": "Quelle est la planète la plus proche du soleil ?",
+      "answer": "Mercure.",
+      "description": "Mercure est la première planète du système solaire et la plus proche du soleil.",
+      "tag": "science",
+      "column": "Je sais un peu"
+    },
+    {
+      "id": 7,
+      "question": "Quel est le genre musical traditionnel d'Argentine ?",
+      "answer": "Le tango.",
+      "description": "Le tango est un genre musical et une danse sociale originaire de Buenos Aires, en Argentine, célèbre dans le monde entier.",
+      "tag": "musique",
+      "column": "Je sais bien"
+    },
+    {
+      "id": 8,
+      "question": "Quelle est la capitale du Japon ?",
+      "answer": "Tokyo.",
+      "description": "Tokyo est la capitale du Japon, une des plus grandes mégalopoles du monde, connue pour son mélange unique de tradition et de modernité.",
+      "tag": "voyage",
+      "column": "Je sais parfaitement"
+    },
+    {
+      "id": 9,
+      "question": "Quel fruit est souvent utilisé pour faire du guacamole ?",
+      "answer": "L'avocat.",
+      "description": "L'avocat est l'ingrédient principal du guacamole, un plat traditionnel de la cuisine mexicaine.",
+      "tag": "nourriture",
+      "column": "A apprendre"
+    },
+    {
+      "id": 10,
+      "question": "Quel est le mammifère marin le plus grand ?",
+      "answer": "La baleine bleue.",
+      "description": "La baleine bleue est le plus grand animal vivant sur Terre, pouvant atteindre une longueur de 30 mètres et un poids de 170 tonnes.",
+      "tag": "animaux",
+      "column": "Je sais un peu"
+    },
+    {
+      "id": 11,
+      "question": "Quel instrument à vent est associé au jazz ?",
+      "answer": "Le saxophone.",
+      "description": "Le saxophone est un instrument à vent souvent utilisé dans le jazz, réputé pour sa sonorité expressive et sa grande flexibilité.",
+      "tag": "musique",
+      "column": "Je sais bien"
+    },
+    {
+      "id": 12,
+      "question": "Quelle est la spécialité culinaire typique d'Italie à base de pâte fine ?",
+      "answer": "La pizza.",
+      "description": "La pizza est un plat d'origine italienne composé d'une pâte garnie de divers ingrédients, comme la sauce tomate, le fromage et les légumes.",
+      "tag": "nourriture",
+      "column": "Je sais parfaitement"
+    },
+    {
+      "id": 13,
+      "question": "Quel oiseau est incapable de voler mais peut courir très vite ?",
+      "answer": "L'autruche.",
+      "description": "L'autruche est le plus grand oiseau vivant et, bien qu'elle ne puisse pas voler, elle peut courir à une vitesse de 70 km/h.",
+      "tag": "animaux",
+      "column": "A apprendre"
+    },
+    {
+      "id": 14,
+      "question": "Quelle étoile est au centre de notre système solaire ?",
+      "answer": "Le Soleil.",
+      "description": "Le Soleil est l'étoile située au centre du système solaire, responsable de la lumière et de la chaleur sur Terre.",
+      "tag": "science",
+      "column": "Je sais un peu"
+    },
+    {
+      "id": 15,
+      "question": "Quel compositeur a écrit la symphonie n°9, aussi appelée l'Ode à la Joie ?",
+      "answer": "Ludwig van Beethoven.",
+      "description": "Ludwig van Beethoven est un compositeur allemand célèbre pour sa Neuvième Symphonie, dont le final est souvent surnommé l'Ode à la Joie.",
+      "tag": "musique",
+      "column": "Je sais bien"
+    },
+    {
+      "id": 16,
+      "question": "Quelle est la plus haute montagne du monde ?",
+      "answer": "L'Everest.",
+      "description": "L'Everest est le point culminant de la Terre, situé dans la chaîne de l'Himalaya, avec une altitude de 8 848 mètres.",
+      "tag": "voyage",
+      "column": "Je sais parfaitement"
+    },
+    {
+      "id": 17,
+      "question": "Quelle est la viande principale utilisée dans le hachis parmentier ?",
+      "answer": "Le bœuf.",
+      "description": "Le hachis parmentier est un plat français à base de purée de pommes de terre et de viande de bœuf hachée.",
+      "tag": "nourriture",
+      "column": "A apprendre"
+    },
+    {
+      "id": 18,
+      "question": "Quel est l’animal volant le plus rapide ?",
+      "answer": "Le faucon pèlerin.",
+      "description": "En piqué, le faucon pèlerin peut atteindre des vitesses de plus de 300 km/h, en faisant l’animal volant le plus rapide.",
+      "tag": "animaux",
+      "column": "Je sais un peu"
+    },
+    {
+      "id": 19,
+      "question": "Quelle est la durée d'une année sur Mars par rapport à la Terre ?",
+      "answer": "687 jours terrestres.",
+      "description": "Une année martienne, c’est-à-dire le temps qu'il faut à Mars pour faire une révolution complète autour du Soleil, dure 687 jours terrestres.",
+      "tag": "science",
+      "column": "Je sais bien"
+    },
+    {
+      "id": 20,
+      "question": "Quelle ville est célèbre pour ses canaux et ses gondoles ?",
+      "answer": "Venise.",
+      "description": "Venise est une ville en Italie célèbre pour ses canaux, ses gondoles et son architecture unique.",
+      "tag": "voyage",
+      "column": "Je sais parfaitement"
+    },
+    {
+      "id": 21,
+      "question": "Quel fruit est connu pour sa forte teneur en vitamine C ?",
+      "answer": "L'orange.",
+      "description": "L'orange est un fruit d'agrume riche en vitamine C, contribuant à renforcer le système immunitaire.",
+      "tag": "nourriture",
+      "column": "A apprendre"
+    },
+    {
+      "id": 22,
+      "question": "Quel est le seul mammifère capable de voler ?",
+      "answer": "La chauve-souris.",
+      "description": "Les chauves-souris sont les seuls mammifères capables de voler activement, à la différence des autres mammifères planeurs.",
+      "tag": "animaux",
+      "column": "Je sais un peu"
+    },
+    {
+      "id": 23,
+      "question": "Quel est le processus utilisé par les plantes pour convertir la lumière en énergie ?",
+      "answer": "La photosynthèse.",
+      "description": "La photosynthèse permet aux plantes de produire de l'énergie sous forme de glucose à partir de la lumière, de l'eau et du dioxyde de carbone.",
+      "tag": "science",
+      "column": "Je sais bien"
+    },
+    {
+      "id": 24,
+      "question": "Quel est le plat national espagnol à base de riz ?",
+      "answer": "La paella.",
+      "description": "La paella est un plat espagnol traditionnel composé de riz, de safran, de fruits de mer ou de viande, originaire de Valence.",
+      "tag": "nourriture",
+      "column": "Je sais parfaitement"
+    },
+    {
+      "id": 25,
+      "question": "Quel est le plus grand carnivore terrestre ?",
+      "answer": "L'ours polaire.",
+      "description": "L'ours polaire est le plus grand carnivore terrestre, vivant dans les régions arctiques.",
+      "tag": "animaux",
+      "column": "A apprendre"
+    },
+    {
+      "id": 26,
+      "question": "Quel genre musical est caractérisé par des chants en polyphonie et un rythme lent ?",
+      "answer": "Le chant grégorien.",
+      "description": "Le chant grégorien est un genre de chant liturgique chrétien, marqué par son rythme libre et l'absence d'instruments.",
+      "tag": "musique",
+      "column": "Je sais un peu"
+    },
+    {
+      "id": 27,
+      "question": "Quelle ville est surnommée la \"Grosse Pomme\" ?",
+      "answer": "New York.",
+      "description": "New York est surnommée la \"Grosse Pomme\" et est l'une des plus grandes villes du monde.",
+      "tag": "voyage",
+      "column": "Je sais bien"
+    },
+    {
+      "id": 28,
+      "question": "Quel est l'élément chimique le plus abondant dans l'univers ?",
+      "answer": "L'hydrogène.",
+      "description": "L'hydrogène est l'élément chimique le plus répandu dans l'univers, formant environ 75 % de sa masse baryonique.",
+      "tag": "science",
+      "column": "Je sais parfaitement"
+    },
+    {
+      "id": 29,
+      "question": "Quel est l'instrument de musique emblématique des mariachis au Mexique ?",
+      "answer": "La guitare.",
+      "description": "Les mariachis utilisent la guitare, accompagnée d'autres instruments, pour jouer des airs traditionnels mexicains.",
+      "tag": "musique",
+      "column": "A apprendre"
+    },
+    {
+      "id": 30,
+      "question": "Quel oiseau est connu pour son incroyable mémoire ?",
+      "answer": "La corneille.",
+      "description": "Les corneilles ont une mémoire exceptionnelle, capable de reconnaître des visages humains et de résoudre des problèmes complexes.",
+      "tag": "animaux",
+      "column": "Je sais un peu"
     }
   ]
 }

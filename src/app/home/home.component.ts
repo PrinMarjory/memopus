@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { MemoryCard } from '../interfaces/memory-card.interface';
+import { MemoryCardInterface } from '../interfaces/memory-card.interface';
 import { MemoryCardService } from '../services/memory-card.service';
 import { CardComponent } from '../card/card.component';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,8 +24,8 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  memoryCards: MemoryCard[] = [];
-  newCard: MemoryCard = { id: 0, question: '', answer: '', description: '' };
+  memoryCards: MemoryCardInterface[] = [];
+  newCard: MemoryCardInterface = { id: 0, question: '', answer: '', description: '', tag: '', column: 'A apprendre' };
   newCardForm!: FormGroup;
   isEditMode = false;
   editCardId: number | null = null;
@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit {
    * 
    * @param card - La carte mémoire à modifier.
    */
-  openEditModal(card: MemoryCard): void {
+  openEditModal(card: MemoryCardInterface): void {
     this.isEditMode = true;
     this.editCardId = card.id;
     this.newCardForm.patchValue(card);
@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit {
    * 
    * @param card - La carte mémoire à supprimer.
    */
-  openDeleteModal(card: MemoryCard): void {
+  openDeleteModal(card: MemoryCardInterface): void {
     this.deleteCardId = card.id;
     const modalElement = document.getElementById('deleteCardModal') as any;
     if (modalElement) {
@@ -144,7 +144,7 @@ export class HomeComponent implements OnInit {
    */
   addCard(): void {
     if (this.newCardForm.valid) {
-      const newCard: MemoryCard = this.newCardForm.value;
+      const newCard: MemoryCardInterface = this.newCardForm.value;
 
       // Mise à jour de l'interface
       const tempId = Date.now();
@@ -181,7 +181,7 @@ export class HomeComponent implements OnInit {
       return;
     }
 
-    const updatedCard: MemoryCard = { ...this.newCardForm.value, id: this.editCardId };
+    const updatedCard: MemoryCardInterface = { ...this.newCardForm.value, id: this.editCardId };
 
     this.memoryCardService.updateMemoryCard(updatedCard).subscribe({
       next: (card) => {
