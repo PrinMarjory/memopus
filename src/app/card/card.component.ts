@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MemoryCardInterface } from '../interfaces/memory-card.interface';
 
 /**
@@ -11,7 +12,7 @@ import { MemoryCardInterface } from '../interfaces/memory-card.interface';
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css']
 })
@@ -24,6 +25,8 @@ export class CardComponent {
   @Input() card!: MemoryCardInterface;
   @Output() edit = new EventEmitter<MemoryCardInterface>();
   @Output() delete = new EventEmitter<MemoryCardInterface>();
+
+  expanded: boolean = false;
 
   /**
    * Émet un événement lorsque le bouton "Modifier" est cliqué.
@@ -38,4 +41,11 @@ export class CardComponent {
     onDelete(): void {
       this.delete.emit(this.card);
     }
+
+  /**
+   * Bascule l'état d'expansion de la carte.
+   */
+  toggle(): void {
+    this.expanded = !this.expanded;
+  }
 }

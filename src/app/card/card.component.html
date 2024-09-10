@@ -1,10 +1,10 @@
-<div class="card">
+<div class="card" (click)="toggle()">
     <div class="card-body">
       <span class="badge bg-dark mb-2">{{ card.tag }}</span>
-      <h5 class="card-title">{{ card.question }}</h5>
-      <p class="card-text"><strong>Réponse:</strong> {{ card.answer }}</p>
-      <p class="card-text"><small class="text-muted">{{ card.description }}</small></p>
-      <button type="button" class="btn btn-primary mt-2" (click)="onEdit()">Modifier</button>
-      <button type="button" class="btn btn-danger mt-2 ms-2" (click)="onDelete()">x</button>
+      <h5 class="card-title fs-6">{{ card.question }}</h5>
+      <p class="card-text" *ngIf="expanded"><strong>Réponse:</strong> {{ card.answer }}</p>
+      <p class="card-text" *ngIf="expanded"><small class="text-muted">{{ card.description }}</small></p>
+      <button type="button" class="btn btn-primary mt-2" (click)="onEdit(); $event.stopPropagation()">Modifier</button>
+      <button type="button" class="btn btn-danger mt-2 ms-2" (click)="onDelete(); $event.stopPropagation()">x</button>
     </div>
 </div>
