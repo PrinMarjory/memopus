@@ -25,22 +25,38 @@ export class CardComponent {
   @Input() card!: MemoryCardInterface;
   @Output() edit = new EventEmitter<MemoryCardInterface>();
   @Output() delete = new EventEmitter<MemoryCardInterface>();
+  @Output() leftArrow = new EventEmitter<MemoryCardInterface>();
+  @Output() rightArrow = new EventEmitter<MemoryCardInterface>();
 
   expanded: boolean = false;
 
   /**
    * Émet un événement lorsque le bouton "Modifier" est cliqué.
    */
-    onEdit(): void {
-      this.edit.emit(this.card);
-    }
+  onEdit(): void {
+    this.edit.emit(this.card);
+  }
 
   /**
    * Émet un événement lorsque le bouton "Supprimer" est cliqué.
    */
-    onDelete(): void {
-      this.delete.emit(this.card);
-    }
+  onDelete(): void {
+    this.delete.emit(this.card);
+  }
+
+  /**
+   * Émet un événement lorsque la flèche de gauche est cliquée.
+   */
+  onLeftArrow(): void {
+    this.leftArrow.emit(this.card);
+  }
+
+  /**
+   * Émet un événement lorsque la flèche de droite est cliquée.
+   */
+  onRightArrow(): void {
+    this.rightArrow.emit(this.card);
+  }
 
   /**
    * Bascule l'état d'expansion de la carte.

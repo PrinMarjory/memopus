@@ -120,9 +120,9 @@
       "description": "L'avocat est l'ingrédient principal du guacamole, un plat traditionnel de la cuisine mexicaine.",
       "tag": "nourriture",
       "column": {
-        "id": 1,
-        "label": "A apprendre",
-        "order": 1
+        "id": 2,
+        "label": "Je sais un peu",
+        "order": 2
       }
     },
     {
@@ -156,9 +156,9 @@
       "description": "La pizza est un plat d'origine italienne composé d'une pâte garnie de divers ingrédients, comme la sauce tomate, le fromage et les légumes.",
       "tag": "nourriture",
       "column": {
-        "id": 4,
-        "label": "Je sais parfaitement",
-        "order": 4
+        "id": 2,
+        "label": "Je sais un peu",
+        "order": 2
       }
     },
     {

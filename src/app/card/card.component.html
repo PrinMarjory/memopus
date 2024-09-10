@@ -4,7 +4,15 @@
       <h5 class="card-title fs-6">{{ card.question }}</h5>
       <p class="card-text" *ngIf="expanded"><strong>Réponse:</strong> {{ card.answer }}</p>
       <p class="card-text" *ngIf="expanded"><small class="text-muted">{{ card.description }}</small></p>
-      <button type="button" class="btn btn-primary mt-2" (click)="onEdit(); $event.stopPropagation()">Modifier</button>
-      <button type="button" class="btn btn-danger mt-2 ms-2" (click)="onDelete(); $event.stopPropagation()">x</button>
+      <div class="d-flex align-items-center mt-2">
+        <button type="button" class="btn btn-sm me-2" (click)="onLeftArrow(); $event.stopPropagation()">
+          <span class="triangle-left"></span>
+        </button>
+        <button type="button" class="btn btn-primary btn-sm me-2" (click)="onEdit(); $event.stopPropagation()">Modifier</button>
+        <button type="button" class="btn btn-danger btn-sm me-2" (click)="onDelete(); $event.stopPropagation()">X</button>
+        <button type="button" class="btn btn-sm" (click)="onRightArrow(); $event.stopPropagation()">
+          <span class="triangle-right"></span>
+        </button>
+      </div>
     </div>
 </div>

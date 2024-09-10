@@ -138,6 +138,46 @@ export class HomeComponent implements OnInit {
   }
 
   /**
+   * Déplace une carte mémoire vers la gauche.
+   * 
+   * @param card - La carte mémoire à déplacer.
+   */
+  moveCardLeft(card: MemoryCardInterface): void {
+    const currentColumnIndex = this.columns.findIndex(col => col.id === card.column.id);
+    const newColumnIndex = (currentColumnIndex - 1 + this.columns.length) % this.columns.length;
+    card.column = this.columns[newColumnIndex];
+    this.updateCardColumn(card);
+  }
+
+  /**
+   * Déplace une carte mémoire vers la droite.
+   * 
+   * @param card - La carte mémoire à déplacer.
+   */
+  moveCardRight(card: MemoryCardInterface): void {
+    const currentColumnIndex = this.columns.findIndex(col => col.id === card.column.id);
+    const newColumnIndex = (currentColumnIndex + 1) % this.columns.length;
+    card.column = this.columns[newColumnIndex];
+    this.updateCardColumn(card);
+  }
+
+  /**
+   * Met à jour la colonne de la carte mémoire dans le backend.
+   * 
+   * @param card - La carte mémoire à mettre à jour.
+   */
+  updateCardColumn(card: MemoryCardInterface): void {
+    this.memoryCardService.updateMemoryCard(card.id, card).subscribe({
+      next: (updatedCard) => {
+        console.log('Card updated successfully:', updatedCard);
+      },
+      error: (err) => {
+        console.error('Error updating card:', err);
+      }
+    });
+  }
+
+  /**
    * Filtre les cartes mémoire par tag.
    * 
    * @param tag - Le tag à filtrer.

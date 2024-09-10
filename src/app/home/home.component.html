@@ -25,7 +25,13 @@
         <p>Aucune carte à afficher dans cette colonne.</p>
       </div>
       <div class="mb-2" *ngFor="let card of getCardsByColumn(column.label)">
-        <app-card [card]="card" (edit)="openEditModal($event)" (delete)="openDeleteModal($event)"></app-card>
+        <app-card 
+          [card]="card"
+          (edit)="openEditModal($event)"
+          (delete)="openDeleteModal($event)"
+          (leftArrow)="moveCardLeft($event)" 
+          (rightArrow)="moveCardRight($event)">
+        </app-card>
       </div>
     </div>
   </div>
