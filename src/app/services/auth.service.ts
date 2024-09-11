@@ -6,7 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 /**
  * Service d'authentification pour gérer les connexions utilisateur.
  * 
- * @@Injectable
+ * @Injectable
  * @providedIn root
  */
 @Injectable({
@@ -60,6 +60,7 @@ export class AuthService {
 
   /**
    * Méthode pour vérifier l'état de connexion de l'utilisateur.
+   * 
    * @returns {Observable<boolean>} - Un observable qui émet l'état de connexion.
    */
   isLoggedIn(): Observable<boolean> {

@@ -1,4 +1,5 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="container mt-5">
+  <!-- Champ pour le nom d'utilisateur -->
   <div class="form-group mb-3">
     <label for="username">Nom d'utilisateur</label>
     <input id="username" formControlName="username" type="text" class="form-control" />
@@ -6,6 +7,8 @@
       Le nom d'utilisateur est requis.
     </div>
   </div>
+
+  <!-- Champ pour le mot de passe -->
   <div class="form-group mb-3">
     <label for="password">Mot de passe</label>
     <input id="password" formControlName="password" type="password" class="form-control" />
@@ -13,5 +16,7 @@
       Le mot de passe est requis.
     </div>
   </div>
+  
+  <!-- Bouton de soumission du formulaire -->
   <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Connexion</button>
 </form>

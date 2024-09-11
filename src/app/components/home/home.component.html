@@ -1,5 +1,5 @@
-<div class="container">
-  <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="container position-relative">
+  <div class="d-flex justify-content-between align-items-center">
     <h2>Toutes les cartes mémoire</h2>
     <button type="button" class="btn btn-primary" (click)="openAddModal()">
       Ajouter une carte mémoire
@@ -18,6 +18,7 @@
       </ul>
     </div>
 
+  <!-- Liste des colonnes et des cartes -->
   <div class="row">
     <div class="col" *ngFor="let column of columns">
       <h5 class="text-muted">{{ column.label }}</h5>
@@ -34,6 +35,14 @@
         </app-card>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Message d'alerte -->
+<div *ngIf="alertMessage" class="alert-container">
+  <div class="alert alert-{{ alertType }} alert-dismissible fade show" role="alert">
+    {{ alertMessage }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" (click)="alertMessage = null"></button>
   </div>
 </div>
 

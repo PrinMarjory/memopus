@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -12,21 +13,22 @@ import { AuthService } from './services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'memopus';
-  isLoggedIn = false;
+  title = 'memopus'; // Titre de l'application
+  isLoggedIn = false; // État de connexion de l'utilisateur
 
   /**
    * Constructeur du composant racine.
    * 
-   * @param authService 
-   * @param router 
+   * @param authService - Service pour gérer l'authentification de l'utilisateur.
+   * @param router - Service pour gérer la navigation entre les pages.
    */
   constructor(public authService: AuthService, private router: Router) {}
 
   /**
    * Initialisation du composant.   
-   * Écoute les changements dans l'état de connexion.
-   * 
+   * Ce hook de cycle de vie est appelé une fois que le composant est initialisé.
+   * Il souscrit à l'observable pour écouter les changements dans l'état de connexion
+   * de l'utilisateur et met à jour la propriété `isLoggedIn`.
    */
   ngOnInit(): void {
     this.authService.isLoggedIn().subscribe({
@@ -40,7 +42,8 @@ export class AppComponent {
   }
 
   /**
-   * Méthode pour déconnecter l'utilisateur.
+   * Déconnecte l'utilisateur en appelant la méthode `logout` du service AuthService.
+   * Une fois l'utilisateur déconnecté, il est redirigé vers la page de connexion.
    */
   logout(): void {
     this.authService.logout();

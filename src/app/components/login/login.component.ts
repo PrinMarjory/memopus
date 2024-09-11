@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   /** Formulaire de connexion */
   loginForm!: FormGroup;
 
-    /**
+  /**
    * Constructeur du composant de connexion.
    * @param fb - FormBuilder pour créer le formulaire.
    * @param authService - Service d'authentification pour vérifier les informations de connexion.
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
  
   /**
    * Initialisation du composant.
-   * Crée le formulaire de connexion.
+   * Crée le formulaire de connexion et vérifie si l'utilisateur est déjà connecté.
    */
   ngOnInit(): void {
     this.loginForm = this.fb.group({

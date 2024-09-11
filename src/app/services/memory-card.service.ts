@@ -7,19 +7,23 @@ import { MemoryCardInterface, NewCardInterface, PatchCardInterface } from '../in
   providedIn: 'root'
 })
 export class MemoryCardService {
+  /**
+   * URL de l'API pour les cartes mémoire.
+   * @type {string}
+   */
   private apiUrl = 'http://localhost:3000/memoryCards';
 
   /**
    * Constructeur du service MemoryCardService.
    * 
-   * @param http - Service HttpClient pour effectuer des requêtes HTTP.
+   * @param {HttpClient} http - Service HttpClient pour effectuer des requêtes HTTP.
    */
   constructor(private http: HttpClient) {}
 
   /**
-   * Récupère les cartes mémoire depuis le serveur JSON.
+   * Récupère toutes les cartes mémoire depuis le serveur.
    * 
-   * @returns Un Observable contenant un tableau de MemoryCard.
+   * @returns {Observable<MemoryCardInterface[]>} - Un Observable contenant un tableau de cartes mémoire.
    */
   getMemoryCards(): Observable<MemoryCardInterface[]> {
     return this.http.get<MemoryCardInterface[]>(this.apiUrl);
@@ -28,17 +32,19 @@ export class MemoryCardService {
   /**
    * Ajoute une nouvelle carte mémoire.
    * 
-   * @param card - La carte mémoire à ajouter.
-   * @returns Un Observable contenant la carte mémoire ajoutée.
+   * @param {NewCardInterface} card - La carte mémoire à ajouter.
+   * @returns {Observable<MemoryCardInterface>} - Un Observable contenant la carte mémoire ajoutée.
    */
   addMemoryCard(card: NewCardInterface): Observable<MemoryCardInterface> {
     return this.http.post<MemoryCardInterface>(this.apiUrl, card);
   }
 
-      /**
+  /**
    * Met à jour une carte mémoire existante.
    * 
-   * @param card - La carte mémoire à mettre à jour.
+   * @param {number} id - L'identifiant de la carte mémoire à mettre à jour.
+   * @param {PatchCardInterface} card - Les modifications à appliquer à la carte mémoire.
+   * @returns {Observable<MemoryCardInterface>} - Un Observable contenant la carte mémoire mise à jour.
    */
   updateMemoryCard(id: number, card: PatchCardInterface): Observable<MemoryCardInterface> {
     const url = `${this.apiUrl}/${id}`;
@@ -48,7 +54,8 @@ export class MemoryCardService {
   /**
    * Supprime une carte mémoire.
    * 
-   * @param id - L'identifiant de la carte mémoire à supprimer. 
+   * @param {number} id - L'identifiant de la carte mémoire à supprimer.
+   * @returns {Observable<void>} - Un Observable indiquant que la suppression est terminée.
    */
   deleteMemoryCard(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
